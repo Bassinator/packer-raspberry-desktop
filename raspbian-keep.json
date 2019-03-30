@@ -2,24 +2,6 @@
   "variables": {
     "version": "2.0"
   },
-  "provisioners": [
-    {
-      "type": "shell",
-      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
-      "script": "scripts/ansible.sh"
-    },
-    {
-      "type": "ansible-local",
-      "playbook_file": "ansible/main.yml",
-      "extra_arguments": [ "--extra-vars \"ansible_python_interpreter=/usr/bin/python3\"" ],
-      "galaxy_file": "requirements.yml"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "script": "scripts/cleanup.sh"
-    }
-  ],
   "builders": [
     {
       "type": "virtualbox-iso",
@@ -84,22 +66,20 @@
           "{{.Name}}",
           "--cpus",
           "2"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--nic1",
+          "nat"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cableconnected1",
+          "on"
         ]
       ]
     }
-  ],
-  "post-processors": [
-    [
-      {
-        "output": "builds/rpd-2018-11-26-stretch.box",
-        "type": "vagrant",
-        "only": ["virtualbox-iso"]
-      },
-      {
-        "type": "vagrant-cloud",
-        "box_tag": "Bassualdo/raspberryDesktop",
-        "version": "{{user `version`}}"
-      }
-    ]
   ]
 }
