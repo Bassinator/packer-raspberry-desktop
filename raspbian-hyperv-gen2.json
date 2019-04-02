@@ -1,0 +1,79 @@
+{
+  "variables": {
+    "version": "2.0"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
+      "script": "scripts/ansible.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
+      "script": "scripts/install-hyperv.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/cleanup.sh"
+    }
+  ],
+  "builders": [
+    {
+      "type": "hyperv-iso",
+      "boot_command": [
+        "<esc><wait>",
+        "c  setparams 'Install' <enter>",
+        "linux /install.$ARCH/vmlinuz file=/cdrom/live/preseed.cfg locale=en_GB vga=788",
+        " auto",
+        " debian-installer=en_US",
+        " locale=en_US",
+        " keymap=us",
+        " net.ifnames=0",
+        " time/zone=US/Eastern",
+        " netcfg/choose_interface=eth0",
+        " netcfg/get_hostname=raspberry",
+        " netcfg/get_domain=",
+        " partman-auto/method=regular",
+        " partman-auto/choose_recipe=atomic",
+        " partman/choose_partition=finish",
+        " partman/confirm=true",
+        " partman/confirm_nooverwrite=true",
+        " pkgsel/include=hyperv-daemons"
+        " finish-install/reboot_in_progress=note",
+        " --- quiet <enter>",
+        "initrd /install.$ARCH/initrd.gz<enter>",
+        "<enter>",
+        "boot<enter>"
+      ],
+      "boot_wait": "2s",
+      "disk_size": 81920,
+      "headless": true,
+      "http_directory": "http",
+      "iso_urls": [
+        "iso/rpd_x86-2018-12-03/2018-11-26-rpd-x86-stretch.iso",
+        "http://director.downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2018-12-03/2018-11-26-rpd-x86-stretch.iso"
+      ],
+      "iso_checksum": "0148f4b5da4b9c82c731107e4a29e645445d715db8b070609df3c6689df0c8d1",
+      "iso_checksum_type": "sha256",
+      "ssh_username": "pi",
+      "ssh_password": "raspberry",
+      "ssh_port": 22,
+      "ssh_timeout" : "4h",
+      "generation" : 2,
+      "shutdown_command": "sudo -S shutdown -P now",
+      "vm_name": "rpd-2018-11-26-stretch",
+      "skip_export": false
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "output": "builds/rpd-2018-11-26-stretch.box",
+        "type": "vagrant",
+        "only": ["hyperv-iso"]
+      }
+    ]
+  ]
+}
