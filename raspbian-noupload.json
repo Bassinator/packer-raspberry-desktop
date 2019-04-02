@@ -2,12 +2,32 @@
   "variables": {
     "version": "2.0"
   },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
+      "script": "scripts/upgrade.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
+      "script": "scripts/ansible.sh"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible/main.yml",
+      "extra_arguments": [ "--extra-vars \"ansible_python_interpreter=/usr/bin/python3\"" ],
+      "galaxy_file": "requirements.yml"
+    }
+  ],
   "builders": [
     {
       "type": "virtualbox-iso",
       "boot_command": [
         "<esc><wait>",
-        "/install.amd/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg vga=788 <wait>",
+        "/install.amd/vmlinuz",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+        " vga=788 <wait>",
         "--- quiet initrd=/install.amd/initrd.gz <wait>",
         " auto",
         " debian-installer=en_US",
@@ -18,7 +38,7 @@
         " netcfg/choose_interface=eth0",
         " netcfg/get_hostname=raspberry",
         " netcfg/get_domain=",
-        " partman-auto/init_automatically_partition=biggest_free",
+        " partman-auto/init_automatically_partition=entire_disk",
         " partman-auto/disk=/dev/sda",
         " partman-auto/method=lvm",
         " partman-auto/choose_recipe=atomic",
@@ -53,7 +73,7 @@
       "virtualbox_version_file": ".vbox_version",
       "vm_name": "rpd-2018-11-26-stretch",
       "post_shutdown_delay": "10s",
-      "skip_export": false,
+      "skip_export": true,
       "vboxmanage": [
         [
           "modifyvm",

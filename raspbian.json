@@ -16,7 +16,7 @@
     },
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "execute_command": "{{.Vars}} sudo -S -E bash '{{.Path}}'",
       "script": "scripts/cleanup.sh"
     }
   ],
@@ -71,7 +71,7 @@
       "virtualbox_version_file": ".vbox_version",
       "vm_name": "rpd-2018-11-26-stretch",
       "post_shutdown_delay": "10s",
-      "skip_export": false,
+      "skip_export": true,
       "vboxmanage": [
         [
           "modifyvm",
@@ -84,6 +84,18 @@
           "{{.Name}}",
           "--cpus",
           "2"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--nic1",
+          "nat"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cableconnected1",
+          "on"
         ]
       ]
     }
