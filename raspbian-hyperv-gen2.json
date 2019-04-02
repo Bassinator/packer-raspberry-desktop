@@ -10,11 +10,6 @@
     },
     {
       "type": "shell",
-      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
-      "script": "scripts/install-hyperv.sh"
-    },
-    {
-      "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "script": "scripts/cleanup.sh"
     }
@@ -25,7 +20,7 @@
       "boot_command": [
         "<esc><wait>",
         "c  setparams 'Install' <enter>",
-        "linux /install.$ARCH/vmlinuz file=/cdrom/live/preseed.cfg locale=en_GB vga=788",
+        "linux /install.$ARCH/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/hyperv.seed locale=en_GB vga=788",
         " auto",
         " debian-installer=en_US",
         " locale=en_US",
@@ -40,7 +35,8 @@
         " partman/choose_partition=finish",
         " partman/confirm=true",
         " partman/confirm_nooverwrite=true",
-        " pkgsel/include=hyperv-daemons"
+        " pkgsel/upgrade=full-upgrade",
+        " pkgsel/include=hyperv-daemons",
         " finish-install/reboot_in_progress=note",
         " --- quiet <enter>",
         "initrd /install.$ARCH/initrd.gz<enter>",

@@ -1,0 +1,20 @@
+d-i debian-installer/allow_unauthenticated boolean true
+
+d-i netcfg/enable boolean falses
+d-i netcfg/get_hostname string raspberry
+d-i netcfg/get_domain string
+
+d-i passwd/root-login boolean false
+
+d-i passwd/user-fullname string
+d-i passwd/username string pi
+d-i passwd/user-password password raspberry
+d-i passwd/user-password-again password raspberry
+
+d-i apt-setup/use_mirror boolean false
+
+d-i preseed/late_command string \
+  in-target apt-get update ; \
+  in-target apt-get install -y hyperv-daemons ; \
+  touch /target/boot/ssh ; \
+  /target/postinst.sh
