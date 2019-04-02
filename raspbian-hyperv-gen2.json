@@ -56,7 +56,7 @@
       "ssh_username": "pi",
       "ssh_password": "raspberry",
       "ssh_port": 22,
-      "ssh_timeout" : "4h",
+      "ssh_timeout" : "1h",
       "generation" : 2,
       "shutdown_command": "sudo -S shutdown -P now",
       "vm_name": "rpd-2018-11-26-stretch",
@@ -69,6 +69,11 @@
         "output": "builds/rpd-2018-11-26-stretch.box",
         "type": "vagrant",
         "only": ["hyperv-iso"]
+      },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "Bassualdo/raspberryDesktop",
+        "version": "{{user `version`}}"
       }
     ]
   ]
