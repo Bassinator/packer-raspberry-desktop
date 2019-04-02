@@ -44,6 +44,8 @@
         " partman/choose_partition=finish",
         " partman/confirm=true",
         " partman/confirm_nooverwrite=true",
+        " grub-installer/only_debian=true",
+        " grub-installer/bootdev=/dev/sda",
         " finish-install/reboot_in_progress=note",
         "<enter>"
       ],
