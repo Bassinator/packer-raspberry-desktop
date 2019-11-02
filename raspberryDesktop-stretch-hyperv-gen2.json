@@ -1,6 +1,6 @@
 {
   "variables": {
-    "version": "2.0"
+    "version": "2.3"
   },
   "provisioners": [
     {
@@ -35,6 +35,8 @@
         " partman/choose_partition=finish",
         " partman/confirm=true",
         " partman/confirm_nooverwrite=true",
+        " grub-installer/only_debian=true",
+        " grub-installer/bootdev=/dev/sda",
         " pkgsel/upgrade=full-upgrade",
         " pkgsel/include=hyperv-daemons",
         " finish-install/reboot_in_progress=note",
@@ -48,10 +50,10 @@
       "headless": true,
       "http_directory": "http",
       "iso_urls": [
-        "iso/rpd_x86-2018-12-03/2018-11-26-rpd-x86-stretch.iso",
-        "http://director.downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2018-12-03/2018-11-26-rpd-x86-stretch.iso"
+        "iso/rpd_x86-2019-04-12/2019-04-11-rpd-x86-stretch.iso",
+        "https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2019-04-12/2019-04-11-rpd-x86-stretch.iso"
       ],
-      "iso_checksum": "0148f4b5da4b9c82c731107e4a29e645445d715db8b070609df3c6689df0c8d1",
+      "iso_checksum": "dccee2371937349704a647d4a64d2552f6737e1d4185a0b308c9a0ad8c231cc0",
       "iso_checksum_type": "sha256",
       "ssh_username": "pi",
       "ssh_password": "raspberry",
@@ -59,20 +61,20 @@
       "ssh_timeout" : "1h",
       "generation" : 2,
       "shutdown_command": "sudo -S shutdown -P now",
-      "vm_name": "rpd-2018-11-26-stretch",
+      "vm_name": "raspberryDesktop-stretch-64bit",
       "skip_export": false
     }
   ],
   "post-processors": [
     [
       {
-        "output": "builds/rpd-2018-11-26-stretch.box",
+        "output": "builds/2019-04-11-rpd-x86-stretch-64.box",
         "type": "vagrant",
         "only": ["hyperv-iso"]
       },
       {
         "type": "vagrant-cloud",
-        "box_tag": "Bassualdo/raspberryDesktop",
+        "box_tag": "Bassualdo/raspberryDesktop-stretch-64bit",
         "version": "{{user `version`}}"
       }
     ]
