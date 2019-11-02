@@ -1,6 +1,6 @@
 {
   "variables": {
-    "version": "2.0"
+    "version": "1.0"
   },
   "provisioners": [
     {
@@ -108,7 +108,7 @@
   "post-processors": [
     [
       {
-        "output": "builds/rpd-2019-09-25-stretch-64.box",
+        "output": "builds/rpd-2019-09-25-buster-64.box",
         "type": "vagrant",
         "only": ["virtualbox-iso"]
       },

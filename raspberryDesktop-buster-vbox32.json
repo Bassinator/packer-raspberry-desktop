@@ -108,7 +108,7 @@
   "post-processors": [
     [
       {
-        "output": "builds/rpd-2019-09-25-stretch-32.box",
+        "output": "builds/rpd-2019-09-25-buster-32.box",
         "type": "vagrant",
         "only": ["virtualbox-iso"]
       },
