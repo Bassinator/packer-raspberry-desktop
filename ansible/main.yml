@@ -4,5 +4,5 @@
   gather_facts: yes
 
   roles:
-    - role: bassinator.vbox_additions
+    - role: bassinator.guest_additions
       installation_os_user: pi

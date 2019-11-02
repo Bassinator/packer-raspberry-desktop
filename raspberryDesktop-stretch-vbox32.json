@@ -56,10 +56,10 @@
       "keep_registered": false,
       "http_directory": "http",
       "iso_urls": [
-        "iso/rpd_x86-2018-12-03/2018-11-26-rpd-x86-stretch.iso",
-        "http://director.downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2018-12-03/2018-11-26-rpd-x86-stretch.iso"
+        "iso/rpd_x86-2019-04-12/2019-04-11-rpd-x86-stretch.iso",
+        "https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2019-04-12/2019-04-11-rpd-x86-stretch.iso"
       ],
-      "iso_checksum": "0148f4b5da4b9c82c731107e4a29e645445d715db8b070609df3c6689df0c8d1",
+      "iso_checksum": "dccee2371937349704a647d4a64d2552f6737e1d4185a0b308c9a0ad8c231cc0",
       "iso_checksum_type": "sha256",
       "ssh_username": "pi",
       "ssh_password": "raspberry",
@@ -108,13 +108,13 @@
   "post-processors": [
     [
       {
-        "output": "builds/rpd-2018-11-26-stretch.box",
+        "output": "builds/2019-04-11-rpd-x86-stretch-32.box",
         "type": "vagrant",
         "only": ["virtualbox-iso"]
       },
       {
         "type": "vagrant-cloud",
-        "box_tag": "Bassualdo/raspberryDesktop",
+        "box_tag": "Bassualdo/raspberryDesktop-stretch-32bit",
         "version": "{{user `version`}}"
       }
     ]
