@@ -20,7 +20,7 @@
       "boot_command": [
         "<esc><wait>",
         "c  setparams 'Install' <enter>",
-        "linux /install.$ARCH/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/hyperv.seed locale=en_GB vga=788",
+        "linux /install.amd/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/hyperv.seed locale=en_GB vga=788",
         " auto",
         " debian-installer=en_US",
         " locale=en_US",
@@ -41,7 +41,7 @@
         " pkgsel/include=hyperv-daemons",
         " finish-install/reboot_in_progress=note",
         " --- quiet <enter>",
-        "initrd /install.$ARCH/initrd.gz<enter>",
+        "initrd /install.amd/initrd.gz<enter>",
         "<enter>",
         "boot<enter>"
       ],
