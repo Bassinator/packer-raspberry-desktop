@@ -68,7 +68,7 @@
       "shutdown_command": "sudo -S shutdown -P now",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "rpd-2018-11-26-stretch",
+      "vm_name": "rpd-2018-11-26-buster",
       "post_shutdown_delay": "10s",
       "skip_export": false,
       "vboxmanage": [
@@ -108,7 +108,7 @@
   "post-processors": [
     [
       {
-        "output": "builds/rpd-2019-09-25-buster-64.box",
+        "output": "builds/2019-09-25-rpd-x86-buster-64.box",
         "type": "vagrant",
         "only": ["virtualbox-iso"]
       },
