@@ -1,6 +1,6 @@
 {
   "variables": {
-    "version": "0.0.1",
+    "version": " ",
     "arch": "amd",
     "guest_os_type": "Debian_64"
   },
