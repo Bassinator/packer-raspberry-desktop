@@ -5,7 +5,8 @@ apt-get autoremove --purge
 apt-get install software-properties-common
 
 # add debian repo
-apt-add-repository 'deb http://deb.debian.org/debian stretch contrib main non-free'
+dist=$(grep VERSION_CODENAME /etc/os-release | cut -d "=" -f1)
+apt-add-repository "deb http://deb.debian.org/debian $dist contrib main non-free"
 
 # Install Ansible dependencies.
 apt-get -y update

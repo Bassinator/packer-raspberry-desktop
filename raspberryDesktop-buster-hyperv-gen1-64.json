@@ -20,7 +20,7 @@
       "boot_command": [
         "<esc><wait>",
         "c  setparams 'Install' <enter>",
-        "linux /install.amd/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/hyperv.seed locale=en_GB vga=788",
+        "linux /install.amd/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/hyperv2.seed locale=en_GB vga=788",
         " auto",
         " debian-installer=en_US",
         " locale=en_US",
@@ -36,7 +36,7 @@
         " partman/confirm=true",
         " partman/confirm_nooverwrite=true",
         " grub-installer/only_debian=true",
-        " grub-installer/bootdev=/dev/sda",
+        " grub-installer/bootdev=/dev/sda<wait>",
         " pkgsel/upgrade=full-upgrade",
         " pkgsel/include=hyperv-daemons",
         " finish-install/reboot_in_progress=note",
@@ -53,7 +53,7 @@
         "iso/rpd_x86-2019-10-01/2019-09-25-rpd-x86-buster.iso",
         "https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2019-10-01/2019-09-25-rpd-x86-buster.iso"
       ],
-      "iso_checksum": "dccee2371937349704a647d4a64d2552f6737e1d4185a0b308c9a0ad8c231cc0",
+      "iso_checksum": "ac557f27eb8697912263a1de812dfc99fa8d69bd6acc73a0b7756a1083ba0176",
       "iso_checksum_type": "sha256",
       "ssh_username": "pi",
       "ssh_password": "raspberry",

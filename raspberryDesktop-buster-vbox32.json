@@ -25,10 +25,10 @@
       "type": "virtualbox-iso",
       "boot_command": [
         "<esc><wait>",
-        "/install.amd/vmlinuz",
+        "/install.386/vmlinuz",
         " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/virtualbox.seed",
         " vga=788 <wait>",
-        "--- quiet initrd=/install.amd/initrd.gz <wait>",
+        "--- quiet initrd=/install.386/initrd.gz <wait>",
         " auto",
         " debian-installer=en_US",
         " locale=en_US",

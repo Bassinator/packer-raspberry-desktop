@@ -1,6 +1,8 @@
 {
   "variables": {
-    "version": "2.0"
+    "version": "0.0.1",
+    "arch": "amd",
+    "guest_os_type": "Debian_64"
   },
   "provisioners": [
     {
@@ -25,10 +27,10 @@
       "type": "virtualbox-iso",
       "boot_command": [
         "<esc><wait>",
-        "/install.amd/vmlinuz",
+        "/install.{{user `arch`}}/vmlinuz",
         " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/virtualbox.seed",
         " vga=788 <wait>",
-        "--- quiet initrd=/install.amd/initrd.gz <wait>",
+        "--- quiet initrd=/install.{{user `arch`}}/initrd.gz <wait>",
         " auto",
         " debian-installer=en_US",
         " locale=en_US",
@@ -51,7 +53,7 @@
       ],
       "boot_wait": "10s",
       "disk_size": 81920,
-      "guest_os_type": "Debian_32",
+      "guest_os_type": "{{user `guest_os_type`}}",
       "headless": true,
       "keep_registered": false,
       "http_directory": "http",
@@ -68,7 +70,7 @@
       "shutdown_command": "sudo -S shutdown -P now",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "rpd-2018-11-26-stretch",
+      "vm_name": "rpd-2018-11-26-stretch{{user `arch`}}",
       "post_shutdown_delay": "10s",
       "skip_export": false,
       "vboxmanage": [
@@ -108,13 +110,14 @@
   "post-processors": [
     [
       {
-        "output": "builds/2019-04-11-rpd-x86-stretch-32.box",
+        "keep_input_artifact": true,
+        "output": "builds/2019-04-11-rpd-x86-stretch-{{user `arch`}}.box",
         "type": "vagrant",
         "only": ["virtualbox-iso"]
       },
       {
         "type": "vagrant-cloud",
-        "box_tag": "Bassualdo/raspberryDesktop-stretch-32bit",
+        "box_tag": "Bassualdo/raspberryDesktop-stretch-{{user `arch`}}bit",
         "version": "{{user `version`}}"
       }
     ]
