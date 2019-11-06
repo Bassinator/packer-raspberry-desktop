@@ -1,9 +1,9 @@
 {
   "variables": {
     "version": " ",
-    "arch": "amd",
-    "guest_os_type": "Debian_64"
-    "box_name": "rpd64"
+    "arch": "i386",
+    "guest_os_type": "Debian",
+    "box_name": "raspberryDesktop"
   },
   "provisioners": [
     {
@@ -123,4 +123,4 @@
       }
     ]
   ]
-p
+}
