@@ -5,7 +5,7 @@ stages:
 build-vm:
   stage: build
   script:
-    - packer build -var "version=$CI_COMMIT_TAG" raspberryDesktop-stretch-vbox.json -except=vagrant,vagrant-cloud
+    - packer build -var " " raspberryDesktop-stretch-vbox.json -except=vagrant,vagrant-cloud
   tags:
     - vagrant
   only:
