@@ -5,7 +5,7 @@ stages:
 build-vm:
   stage: build
   script:
-    - packer build -var " " raspberryDesktop-stretch-vbox.json -except=vagrant,vagrant-cloud
+    - packer build -var "version=  " -except=vagrant,vagrant-cloud raspberryDesktop-stretch-vbox.json
   tags:
     - vagrant
   only:
