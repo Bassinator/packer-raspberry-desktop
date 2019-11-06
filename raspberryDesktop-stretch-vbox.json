@@ -1,7 +1,7 @@
 {
   "variables": {
     "version": " ",
-    "arch": "i386",
+    "arch": "386",
     "guest_os_type": "Debian",
     "box_name": "raspberryDesktop"
   },
