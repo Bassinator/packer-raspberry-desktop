@@ -3,6 +3,7 @@
     "version": " ",
     "arch": "amd",
     "guest_os_type": "Debian_64"
+    "box_name": "rpd64"
   },
   "provisioners": [
     {
@@ -117,9 +118,9 @@
       },
       {
         "type": "vagrant-cloud",
-        "box_tag": "Bassualdo/raspberryDesktop-stretch-{{user `arch`}}bit",
+        "box_tag": "Bassualdo/{{user `box_name`}}",
         "version": "{{user `version`}}"
       }
     ]
   ]
-}
+p
