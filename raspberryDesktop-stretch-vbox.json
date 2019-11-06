@@ -111,7 +111,6 @@
   "post-processors": [
     [
       {
-        "keep_input_artifact": true,
         "output": "builds/2019-04-11-rpd-x86-stretch-{{user `arch`}}.box",
         "type": "vagrant",
         "only": ["virtualbox-iso"]
