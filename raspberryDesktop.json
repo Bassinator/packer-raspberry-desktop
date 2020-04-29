@@ -1,7 +1,4 @@
 {
-  "variables": {
-    "version": "2.0"
-  },
   "provisioners": [
     {
       "type": "shell",
@@ -51,15 +48,15 @@
       ],
       "boot_wait": "10s",
       "disk_size": 81920,
-      "guest_os_type": "Debian_32",
+      "guest_os_type": "Debian",
       "headless": true,
       "keep_registered": false,
       "http_directory": "http",
       "iso_urls": [
-        "iso/rpd_x86-2019-10-01/2019-09-25-rpd-x86-buster.iso",
-        "https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2019-10-01/2019-09-25-rpd-x86-buster.iso"
+        "iso/rpd_x86-{{user `version`}}/{{user `image`}}.iso",
+        "https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-{{user `version`}}/{{user `image`}}.iso"
       ],
-      "iso_checksum": "ac557f27eb8697912263a1de812dfc99fa8d69bd6acc73a0b7756a1083ba0176",
+      "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "sha256",
       "ssh_username": "pi",
       "ssh_password": "raspberry",
@@ -68,7 +65,8 @@
       "shutdown_command": "sudo -S shutdown -P now",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "rpd-2018-11-26-stretch",
+      "vm_name": "{{user `box_name`}}",
+      "output_directory": "{{user `box_name`}}",
       "post_shutdown_delay": "10s",
       "skip_export": false,
       "vboxmanage": [
@@ -108,14 +106,15 @@
   "post-processors": [
     [
       {
-        "output": "builds/rpd-2019-09-25-buster-32.box",
+        "output": "builds/{{user `version`}}.box",
         "type": "vagrant",
         "only": ["virtualbox-iso"]
       },
       {
         "type": "vagrant-cloud",
-        "box_tag": "Bassualdo/raspberryDesktop-buster-32bit",
-        "version": "{{user `version`}}"
+        "box_tag": "Bassualdo/{{user `box_name`}}",
+        "version": "{{user `version`}}",
+        "version_description": ""
       }
     ]
   ]
