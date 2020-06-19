@@ -1,25 +1,6 @@
 {
-  "provisioners": [
-    {
-      "type": "shell",
-      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
-      "script": "scripts/upgrade.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
-      "script": "scripts/ansible.sh"
-    },
-    {
-      "type": "ansible-local",
-      "playbook_file": "ansible/main.yml",
-      "extra_arguments": [ "--extra-vars \"ansible_python_interpreter=/usr/bin/python3\"" ],
-      "galaxy_file": "ansible/requirements.yml"
-    }
-  ],
   "builders": [
     {
-      "type": "virtualbox-iso",
       "boot_command": [
         "<esc><wait>",
         "/install.386/vmlinuz",
@@ -48,27 +29,25 @@
       ],
       "boot_wait": "10s",
       "disk_size": 81920,
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "Debian",
       "headless": true,
-      "keep_registered": false,
       "http_directory": "http",
+      "iso_checksum": "sha256:{{user `iso_checksum`}}",
       "iso_urls": [
         "iso/rpd_x86-{{user `version`}}/{{user `image`}}.iso",
         "https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-{{user `version`}}/{{user `image`}}.iso"
       ],
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "sha256",
-      "ssh_username": "pi",
-      "ssh_password": "raspberry",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "1h",
-      "shutdown_command": "sudo -S shutdown -P now",
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "virtualbox_version_file": ".vbox_version",
-      "vm_name": "{{user `box_name`}}",
+      "keep_registered": false,
       "output_directory": "{{user `box_name`}}",
       "post_shutdown_delay": "10s",
+      "shutdown_command": "sudo -S shutdown -P now",
       "skip_export": false,
+      "ssh_password": "raspberry",
+      "ssh_port": 22,
+      "ssh_timeout": "1h",
+      "ssh_username": "pi",
+      "type": "virtualbox-iso",
       "vboxmanage": [
         [
           "modifyvm",
@@ -100,22 +79,48 @@
           "--cableconnected1",
           "on"
         ]
-      ]
+      ],
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "{{user `box_name`}}"
     }
   ],
   "post-processors": [
     [
       {
+        "only": [
+          "virtualbox-iso"
+        ],
         "output": "builds/{{user `version`}}.box",
         "type": "vagrant",
-        "only": ["virtualbox-iso"]
+        "vagrantfile_template": "vagrantfile_template"
       },
       {
-        "type": "vagrant-cloud",
         "box_tag": "Bassualdo/{{user `box_name`}}",
-        "version": "{{user `version`}}",
+        "type": "vagrant-cloud",
+        "version": "{{user `version`}}-{{user `build`}}",
         "version_description": ""
       }
     ]
+  ],
+  "provisioners": [
+    {
+      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
+      "script": "scripts/upgrade.sh",
+      "type": "shell"
+    },
+    {
+      "execute_command": "{{.Vars}} sudo  -H -E bash '{{.Path}}'",
+      "script": "scripts/ansible.sh",
+      "type": "shell"
+    },
+    {
+      "extra_arguments": [
+        "--extra-vars \"ansible_python_interpreter=/usr/bin/python3\""
+      ],
+      "galaxy_file": "ansible/requirements.yml",
+      "playbook_file": "ansible/main.yml",
+      "type": "ansible-local"
+    }
   ]
 }
+
